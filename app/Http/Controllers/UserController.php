@@ -6,76 +6,107 @@ use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-//Lab Course 2.5 – Attribute Changes
-//2.
-// class UserController extends Controller
-// {
-//     public function index()
-//     {
-//         $user = UserModel::create(
-//             [
-//                 'username' => 'manager44',
-//                 'nama' => 'Manager44',
-//                 'password' => Hash::make('12345'),
-//                 'level_id' => 2,
-//             ],
-//         );
-//         $user->username = 'manager45'; //mengubah atribut
+//Praktikum 2.6 – Create, Read, Update, Delete (CRUD)
 
-//         $user->isDirty(); //true
-//         $user->isDirty('username'); //true
-//         $user->isDirty('nama'); //false
-//         $user->isDirty(['nama', 'username']); //true
-
-//         $user->isClean(); //false
-//         $user->isClean('username'); //false
-//         $user->isClean('nama'); //true
-//         $user->isClean(['nama', 'username']); //false
-
-//         $user->save();
-
-//         $user->isDirty(); //false
-//         $user->isClean(); //true
-//         dd($user->isDirty());
-//     }
-// }
-
-//Pada browser muncul false // app\Http\Controllers\UserController.php:39 
-// yang disebabkan penggunaan kode 'dd($user->isDirty());'. penggunaan kode
-// ini mencetak nilai kembalian dari isDirty() menjadi 'false' karena tidak  
-// ada perubahan pada model (karena perubahan telah disimpan dan model menjadi
-// kembali ke keadaan awal pada $user->save();)
-
-
-//4.
 class UserController extends Controller
 {
     public function index()
     {
-        $user = UserModel::create(
-            [
-                'username' => 'manager11',
-                'nama' => 'Manager11',
-                'password' => Hash::make('12345'),
-                'level_id' => 2,
-            ],
-        );
+        $user = UserModel::all();
+        return view('user', ['data' => $user]);        
+    }
+
+    public function tambah()
+    {
+        return view('user_tambah');
+    }
+
+    public function tambah_simpan(Request $request) //no.5
+    {
+        UserModel::create([
+            'username' => $request->username,
+            'nama' => $request->nama,
+            'password' => Hash::make($request->password),
+            'level_id' => $request->level_id
+        ]);
+        return redirect('/user');
+    }
+
+    public function ubah($id) //no.12
+    {
+        $user = UserModel::find($id);
+        return view('user_ubah', ['data' => $user]);
+    }
+
+    public function ubah_simpan($id, Request $request) //no.16
+    {
+        $user = UserModel::find($id);
+
+        $user->username = $request->username;
+        $user->nama = $request->nama;
+        $user->level_id = $request->level_id;
         
-        $user->username = 'manager12'; //mengubah atribut
-
         $user->save();
+        return redirect('/user');
+    }
 
-        $user->wasChanged(); //true
-        $user->wasChanged('username'); //true
-        $user->wasChanged(['username', 'level_id']); //true
-        $user->wasChanged('nama'); //false
-        $user->wasChanged(['nama', 'username']); //true
-        dd($user->wasChanged(['nama', 'username'])); //true
+    public function hapus($id, Request $request) //no.18
+    {
+        $user = UserModel::find($id);
+        $user->delete();
+
+        return redirect('/user');
     }
 }
 
 /*
-Pada browser mucul true karena diatara atribut username dan nama telah
-terjadi perubahan yaitu username, dari 'manager11' menjadi 'manager12'
+4. Save the program code of Steps 1 and 2. Then run the user page on the 
+/user route in the browser and give an explanation in the report.
+=> Pada browser muncul tabel berisi data user dengan tambahan link 
+untuk melakukan CRUD, yaitu Tambah User, Ubah dan Hapus
 */
 
+/*
+8. Save the program code Step 5 to 7. Then run it in the browser and click 
+on the link "+ Add User" observe what is happening and give an explanation 
+in the report.
+=> Pada browser muncul pesan error berupa 'Route [/user/tambah_simpan] 
+not defined.' karena belum membuat Method tambah_simpan pada UserController dan
+Route.
+*/
+
+/*
+11. Save the program code of Steps 9 and 10. Reopen the user list page in 
+the browser, and click the Add User button. Input data on the form and 
+click the save button, then observe what happens and give an explanation 
+in the report
+=> Setelah menekan tombol Simpan, data yang telah diisi pada form muncul 
+pada baris palling bawah list Data User sebagai data baru. Dan pada 
+phpMyAdmin juga terjadi penambahan data pada tabel m_user.
+*/
+
+/*
+14. Save the program code of Steps 12 and 13. Then run it in the browser 
+and click the "Change" link, observe what is happening and give an 
+explanation in the report.
+=> Pada browser muncul pesan error berupa 'Route [/user/ubah_simpan] not defined.' 
+karena belum membuat Method ubah_simpan pada UserController dan
+Route.
+*/
+
+/*
+17. Save the program code of Steps 15 and 16. Reopen the browser's user 
+list page, and click the Change button on one of the lines. Make changes 
+to the data on the form and click the Change button, observe what happens 
+and give an explanation in the report.
+=> Pada browser Data User, terjadi perubahan data pada baris tabel yang 
+telah diupdate dengan menekan tombol Ubah lalu tekan menekan tombol Ubah.
+*/
+
+/*
+19. Save the program code. Reopen the browser's user list page, and click 
+the Delete button on one of the lines. Observe what happened and give 
+explanations in the report.
+=> Pada browser Data User, data pada salah satu baris terhapus setelah 
+menekan tombol Hapus.
+*/
