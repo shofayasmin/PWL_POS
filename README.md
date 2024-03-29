@@ -21,6 +21,7 @@ Answer the following questions according to the understanding of the material ab
 
 6. What is the difference between the migration results in the m_level table, between using $table->id(); by using $table->id('level_id'); ?
 => The difference is that when we use $table->id();, the column name will be the default 'id' and when using $table->id('level_id');, the column name will be 'level_id' and the function remains the same, which is to create an auto-increment column for the primary key.
+$table->id('level_id'); for foreign key
 
 7. In migrations, what is the ->unique() function used for?
 =>To determine that a column in a database table must have a unique value.
@@ -38,4 +39,4 @@ Answer the following questions according to the understanding of the material ab
 =>To identify the relevant database table and primary key column for operations such as fetching, updating, or deleting records via Eloquent ORM.
 
 12. In your opinion, where is it easier to use in performing CRUD operations to the database (DB Façade / Query Builder / Eloquent ORM) ?
-=>Query builder because The syntax is more similar to regular SQL. 
+=>Query builder because The syntax is more similar to regular SQL.
