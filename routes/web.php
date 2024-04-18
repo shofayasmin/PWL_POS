@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +32,7 @@ Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('/user/ha
 Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('/user/tambah_simpan'); //no.9
 Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('/user/ubah_simpan'); //no.15
 
-Route::get('/kategori', [KategoriController::class, 'index']);
+Route::get('/kategori/create', [KategoriController::class, 'create']); //Praktikum 3 js 5
+Route::post('/kategori', [KategoriController::class, 'store']);         //Praktikum 3 js 5
+
+Route::get('/', [WelcomeController::class, 'index']); //Praktikum 2 js 7
