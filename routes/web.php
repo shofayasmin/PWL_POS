@@ -36,3 +36,25 @@ Route::get('/kategori/create', [KategoriController::class, 'create']); //Praktik
 Route::post('/kategori', [KategoriController::class, 'store']);         //Praktikum 3 js 5
 
 Route::get('/', [WelcomeController::class, 'index']); //Praktikum 2 js 7
+
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', [UserController::class, 'index']);          // menampilkan halaman awal user
+    Route::post('/list', [UserController::class, 'list']);      // menampilkan data user dalam bentuk json untuk datatables
+    Route::get('/create', [UserController::class, 'create']);   // menampilkan halaman form tambah user
+    Route::post('/', [UserController::class, 'store']);         // menyimpan data user baru
+    Route::get('/{id}', [UserController::class, 'show']);       // menampilkan detail user js7 p2 n13
+    Route::get('/{id}/edit', [UserController::class, 'edit']);  // menampilkan halaman form edit user
+    Route::put('/{id}', [UserController::class, 'update']);     // menyimpan perubahan data user
+    Route::delete('/{id}', [UserController::class, 'destroy']); //menghapus data user
+});
+
+Route::group(['prefix' => 'category'], function () {
+    Route::get('/', [KategoriController::class, 'index']);          // menampilkan halaman awal kategori
+    Route::post('/list', [KategoriController::class, 'list']);      // menampilkan data kategori dalam bentuk json untuk datatables
+    Route::get('/create', [KategoriController::class, 'create']);   // menampilkan halaman form tambah kategori
+    Route::post('/', [KategoriController::class, 'store']);         // menyimpan data kategori baru
+    Route::get('/{id}', [KategoriController::class, 'show']);       // menampilkan detail kategori js7 p2 n13
+    Route::get('/{id}/edit', [KategoriController::class, 'edit']);  // menampilkan halaman form edit kategori
+    Route::put('/{id}', [KategoriController::class, 'update']);     // menyimpan perubahan data kategori
+    Route::delete('/{id}', [KategoriController::class, 'destroy']); //menghapus data kategori
+});
