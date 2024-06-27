@@ -16,19 +16,25 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'nama' => 'required',
-            'password' => 'required|min:5| confirmed',
-            'level_id' => 'required'
+            'password' => 'required|min:5|confirmed',
+            'level_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         //check if validation fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+        
+        $image = $request->image;
+        
         //create user
         $user = UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
             'password' => bcrypt($request->password),
             'level_id' => $request->level_id,
+            // 'image' => $request->image,
+            'image' => $image->hashName(),
         ]);
         //return response JSON user is created
         if ($user) {
