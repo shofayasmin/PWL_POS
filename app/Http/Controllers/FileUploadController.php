@@ -12,13 +12,11 @@ class FileUploadController extends Controller
     }
     public function prosesFileUpload(Request $request)
     {
-        // dump($request->berkas);
-        // dump($request->file('file'));
-        // return "Pemrosesan file upload di sini";
-
         $request->validate([
             'berkas'=>'required|file|image|max:500',
         ]);
-        echo $request->berkas->getClientOriginalName()."lolos validasi";
+        $path = $request->berkas->store('uploads');
+        echo "proses upload berhasil, data disimpan pada: $path";
+        // echo $request->berkas->getClientOriginalName()."lolos validasi";
     }
 }
