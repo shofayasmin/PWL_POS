@@ -19,5 +19,10 @@ class FileUploadController extends Controller
         $namaFile = 'web-'.time().".".$textFile;
         $path = $request->berkas->storeAs('public',$namaFile);
         echo "proses upload berhasil, data disimpan pada: $path";
+
+        $pathBaru=asset('storage/'.$namaFile);
+        echo "proses upload berhasil, data disimpan pada:$path";
+        echo "<br>";
+        echo "Tampilkan link: <a href='$pathBaru'>$pathBaru</a>";
     }
 }
