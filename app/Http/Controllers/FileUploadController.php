@@ -17,7 +17,7 @@ class FileUploadController extends Controller
         ]);
         $textFile = $request->berkas->getClientOriginalName();
         $namaFile = 'web-'.time().".".$textFile;
-        $path = $request->berkas->storeAs('uploads',$namaFile);
+        $path = $request->berkas->storeAs('public',$namaFile);
         echo "proses upload berhasil, data disimpan pada: $path";
     }
 }
